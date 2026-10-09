@@ -1,0 +1,2 @@
+# Credencial sintética, sem acesso a qualquer serviço.
+CP05_API_TOKEN=CP05_03bddfb473eb4400e805c5917017ee25
