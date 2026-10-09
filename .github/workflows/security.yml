@@ -1,0 +1,58 @@
+name: Security Pipeline
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    name: Gitleaks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Baixar código e histórico
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Detectar segredos nos commits
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+          GITLEAKS_ENABLE_COMMENTS: 'false'
+
+  semgrep:
+    name: Semgrep
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    container:
+      image: semgrep/semgrep:latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v6
+      - name: Reprovar chamadas a eval
+        run: semgrep scan --config .semgrep.yml --error --strict --metrics off .
+
+  trivy:
+    name: Trivy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v6
+      - name: Construir imagem do site
+        run: docker build --pull -t cp05-site:${{ github.sha }} .
+      - name: Reprovar vulnerabilidades críticas na imagem
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: image
+          image-ref: cp05-site:${{ github.sha }}
+          format: table
+          scanners: vuln
+          severity: CRITICAL
+          ignore-unfixed: false
+          exit-code: '1'
