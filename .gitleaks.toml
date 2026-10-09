@@ -1,0 +1,10 @@
+title = "CP05 - regras padrão e credencial sintética de laboratório"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "cp05-segredo-sintetico"
+description = "Credencial sintética CP05 detectada no commit"
+regex = '''CP05_[0-9a-f]{32}'''
+keywords = ["CP05_"]
