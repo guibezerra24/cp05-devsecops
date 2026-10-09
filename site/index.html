@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arcanjosa Cloud: simulador acadêmico de custos de infraestrutura em nuvem.">
+  <title>Arcanjosa Cloud • Simulador</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header wrap">
+    <a class="brand" href="#inicio" aria-label="Arcanjosa Cloud, início"><span class="brand-icon" aria-hidden="true">a.</span>arcanjosa<span class="brand-cloud"> / cloud</span></a>
+    <a class="header-link" href="#projeto">Sobre o projeto <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="inicio">
+    <section class="hero wrap" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow">LABORATÓRIO DE CLOUD COMPUTING</p>
+        <h1 id="title">Sua próxima ideia.<br>Quanto custa<br><em>na nuvem?</em></h1>
+        <p class="lead">Explore como tempo de uso, quantidade de servidores e armazenamento mudam o custo de uma infraestrutura.</p>
+        <p class="disclaimer">Simulação acadêmica com preços fictícios.<br>Não representa uma cotação de provedor.</p>
+      </div>
+      <section class="simulator" aria-labelledby="simulator-title">
+        <div class="sim-head"><span class="eyebrow">CONFIGURE SEU CENÁRIO</span><span class="index">01 / 03</span></div>
+        <h2 id="simulator-title">O tamanho da sua ideia</h2>
+        <form id="calculator">
+          <label for="servers">Servidores <span>unidades</span></label>
+          <input id="servers" name="servers" type="number" min="1" max="100" step="1" value="2" required>
+          <div class="form-row">
+            <div><label for="hours">Tempo de uso <span>h/mês</span></label><input id="hours" name="hours" type="number" min="1" max="744" step="1" value="160" required></div>
+            <div><label for="storage">Armazenamento <span>GB</span></label><input id="storage" name="storage" type="number" min="0" max="100000" step="1" value="50" required></div>
+          </div>
+          <p class="rates">R$ 0,12 por servidor/hora + R$ 0,08 por GB/mês</p>
+          <button type="submit">Calcular estimativa <span aria-hidden="true">↗</span></button>
+          <p id="error" class="error" role="alert"></p>
+        </form>
+        <div class="result" aria-live="polite" aria-atomic="true">
+          <span>Estimativa mensal</span><output id="total" for="servers hours storage">R$ 42,40</output>
+          <p id="breakdown">Computação: R$ 38,40 · Armazenamento: R$ 4,00</p>
+        </div>
+      </section>
+    </section>
+    <section class="about wrap" id="projeto" aria-labelledby="about-title">
+      <div class="about-heading"><p class="eyebrow">DO CÓDIGO AO CONTÊINER</p><h2 id="about-title">Segurança em cada camada.</h2><p>Este projeto acadêmico configura três verificações no GitHub Actions. Os resultados reais ficam registrados nas execuções do repositório.</p></div>
+      <ol class="layers">
+        <li><span class="number">01</span><div><h3>Segredos / Gitleaks</h3><p>Procura credenciais nos commits para sinalizar exposições no código.</p></div></li>
+        <li><span class="number">02</span><div><h3>Código / Semgrep</h3><p>A regra deste laboratório identifica chamadas diretas a eval.</p></div></li>
+        <li><span class="number">03</span><div><h3>Imagem / Trivy</h3><p>Verifica a imagem Docker e reprova a execução quando encontra CVEs críticos.</p></div></li>
+      </ol>
+    </section>
+  </main>
+  <footer class="wrap"><span>Arcanjosa Cloud</span><span>CP05 · DevSecOps and Cloud Computing · Projeto acadêmico</span></footer>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
