@@ -1,0 +1,12 @@
+rules:
+  - id: cp05-no-eval
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      eval executa uma string como código. Dados controlados pelo usuário
+      podem executar instruções arbitrárias. Use conversão numérica e
+      operações explícitas, conforme o formato esperado pela aplicação.
+    pattern: eval(...)
+    metadata:
+      category: security
+      cwe: 'CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code'
